@@ -5,6 +5,9 @@ public class BubbleController : MonoBehaviour
     [SerializeField] float bubbleForce = .3f; 
     private Rigidbody2D rb;
     Animation anim;
+
+    public PlayerController parentPlayer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
