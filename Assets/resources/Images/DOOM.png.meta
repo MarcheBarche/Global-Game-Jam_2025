@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DOOM_0: 672861352887030962
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

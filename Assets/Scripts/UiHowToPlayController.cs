@@ -10,12 +10,12 @@ public class UiHowToPlayController : MonoBehaviour
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        var _backButton = root.Q<VisualElement>("BackToMenu");
+        var _backButton = root.Q<Button>("BackToMenu");
 
-        _backButton.RegisterCallback<ClickEvent>(OnBackToMenuButtonClicked);
+        _backButton.clicked += OnBackToMenuButtonClicked;
     }
 
-    private void OnBackToMenuButtonClicked(ClickEvent evt)
+    private void OnBackToMenuButtonClicked()
     {
         SceneManager.LoadScene("MainMenu");
     }

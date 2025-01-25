@@ -1,35 +1,47 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UiMainMenuController : MonoBehaviour
 {
+
+    private int index = 0;
+    private List<VisualElement> buttons = new List<VisualElement>();
+
+    private Color unselectedButtonColor = new Color(255 / 255, 255 / 255, 255 / 255);
+    private Color unselectedTextColor = new Color(101/255, 101/255, 101 / 255);
+    private Color selectedButtonColor = new Color(101 / 255 , 101 / 255 , 101 / 255 );
+    private Color selectedTextColor = new Color(255 / 255    , 255 / 255, 255 / 255);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        var _startGameButton = root.Q<VisualElement>("Play");
-        var _howToPlayButton = root.Q<VisualElement>("HowToPlay");
-        var _quitButton = root.Q<VisualElement>("Quit");
+        var _startGameButton = root.Q<Button>("Play");
+        var _howToPlayButton = root.Q<Button>("HowToPlay");
+        var _quitButton = root.Q<Button>("Quit");
 
-        _startGameButton.RegisterCallback<ClickEvent>(OnStartGameButtonClicked);
-        _howToPlayButton.RegisterCallback<ClickEvent>(OnHowToPlayButtonClicked);
-        _quitButton.RegisterCallback<ClickEvent>(OnQuitButtonClicked);
+
+
+        _startGameButton.clicked += OnStartGameButtonClicked;
+        _howToPlayButton.clicked += OnHowToPlayButtonClicked;
+        _howToPlayButton.clicked += OnQuitButtonClicked;
     }
 
-    private void OnStartGameButtonClicked(ClickEvent evt)
+    private void OnStartGameButtonClicked()
     {
-        SceneManager.LoadScene("Battlefield");
+        SceneManager.LoadScene("Arena");
     }
 
-    private void OnHowToPlayButtonClicked(ClickEvent evt)
+    private void OnHowToPlayButtonClicked()
     {
         SceneManager.LoadScene("HowToPlay");
     }
 
-    private void OnQuitButtonClicked(ClickEvent evt)
+    private void OnQuitButtonClicked()
     {
         Application.Quit();
     }
@@ -37,6 +49,5 @@ public class UiMainMenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
