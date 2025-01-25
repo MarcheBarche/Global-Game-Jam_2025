@@ -83,7 +83,7 @@ public class Movement : MonoBehaviour
         if (rotationTarget == null || lookInput == Vector2.zero) return;
 
         // Calculate the angle based on the joystick input
-        float angle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg+90;
 
         // Apply the rotation to the target object
         rotationTarget.rotation = Quaternion.Euler(0, 0, angle);
