@@ -18,6 +18,6 @@ background-image: resource("Images/block1");
 .button-metal:active{
 	width: 34%; 
 	height: 19%; 
-	background-color: rgba(255,255,255,.8)
-	-unity-background-image-tint-color: rgba(255,255,255,.8)
+	background-color: rgba(255,255,255,.8);
+	-unity-background-image-tint-color: rgba(255,255,255,.8);
 }
