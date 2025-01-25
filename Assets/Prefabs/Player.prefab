@@ -449,6 +449,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 7
   braccio: {fileID: 1153203865046011527}
+  spawnPoint: {x: 0, y: 0, z: 0}
   bubble: {fileID: 736044315696985009}
   groundLayer:
     serializedVersion: 2
@@ -456,7 +457,9 @@ MonoBehaviour:
   groundCheck: {fileID: 5378206817170444030}
   bubbleGameObject: {fileID: 6049790139327506514, guid: 37cdd7a828880164884c399dac20286b, type: 3}
   shootPoint: {fileID: 3760245906433352696}
+  lifes: 4
   jumpCooldown: 0.5
+  bubbleCooldown: 1
 --- !u!114 &3765087015562952833
 MonoBehaviour:
   m_ObjectHideFlags: 0
