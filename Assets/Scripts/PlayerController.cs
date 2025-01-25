@@ -5,48 +5,103 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f; // Speed of the player
-    public float jumpForce = 10f; // Force applied for jumping
+    public float jumpForce = 5f; // Force applied for jumping
     private Rigidbody2D rb;
     private float moveInput;
-    private bool isGrounded;
-    public Transform rotationTarget; // The GameObject to rotate
+    private bool isGrounded = false;
+    public Transform braccio; // The GameObject to rotate
     private InputSystem_Actions inputActions;
+    public Vector3 spawnPoint = Vector3.zero;
+
+    private bool isBubbled = false;
+    [SerializeField] private int firstEscapeBubbleIndex = 10;
+    [SerializeField] private int modifierEscapeBubbleIndex = 10;
+    private int escapeBubbleIndex = 10;
+    private int currentEscapeBubbleIndex = 0;
+
+    [SerializeField] private GameObject bubble;
     
     [SerializeField] private LayerMask groundLayer; // Layer mask to check for ground
     [SerializeField] private Transform groundCheck; // Transform to check if grounded
     [SerializeField] private GameObject bubbleGameObject;
     [SerializeField] private Transform shootPoint;
+
+    [SerializeField] private int lifes = 4;
+
     private float groundCheckRadius = 0.2f; // Radius of ground check
+
+    [SerializeField] private float jumpCooldown = .5f;
+    private float lastJump = 0f;
+
+    [SerializeField] private float bubbleCooldown = 2f;
+    private float lastBubble = 0f;
 
     void Awake()
     {
-        /*
-        // Initialize the Input Actions
-        inputActions = new InputSystem_Actions();
-        inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>().x;
-        inputActions.Player.Move.canceled += ctx => moveInput = 0f;
-        inputActions.Player.Jump.performed += ctx => Jump();
-        inputActions.Player.Look.performed += ctx => RotateTarget(ctx.ReadValue<Vector2>());
-
-        var controllers = InputSystem.devices;
-        // Get the Rigidbody2D component attached to the player*/
+        this.transform.position = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
+        lastJump = Time.time;
     }
 
-    /*void OnEnable()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Enable the input actions
-        inputActions.Player.Enable();
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("SPIKE"))
+            LoseLife();
+
+        if (collision.gameObject.tag == "bubble" && collision.gameObject.GetComponent<BubbleController>().parentPlayer != this)
+        {
+            Destroy(collision.gameObject);
+            Bubbled();
+            //this.transform.parent = collision.transform;
+        }
     }
 
-    void OnDisable()
+    private void Spawn()
     {
-        // Disable the input actions
-        inputActions.Player.Disable();
-    }*/
+        this.transform.position = spawnPoint;
+        this.escapeBubbleIndex = firstEscapeBubbleIndex;
+    }
+
+    private void Death()
+    {
+        //Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+    }
+
+    private void LoseLife()
+    {
+        lifes--;
+        if (lifes <= 0)
+            Death();
+        EscapedBubbled();
+        Spawn();
+    }
+
+    private void Bubbled()
+    {
+        isBubbled =true;
+        isGrounded = false;
+        this.bubble.SetActive(true);
+    }
+
+    private void EscapedBubbled()
+    {
+        isBubbled = false;
+        currentEscapeBubbleIndex = 0;
+        escapeBubbleIndex += modifierEscapeBubbleIndex;
+        this.bubble.SetActive(false);
+    }
+
 
     void FixedUpdate()
     {
+        if (isBubbled)
+        {
+            rb.linearVelocity = Vector2.up * escapeBubbleIndex/10;
+            return;
+        }
+
         // Apply horizontal movement using Rigidbody2D physics
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
@@ -54,21 +109,36 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    public void OnMove(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>().x;
+    public void OnMove(InputAction.CallbackContext ctx) => moveInput = !this.isBubbled ? ctx.ReadValue<Vector2>().x : 0;
     public void OnRotate(InputAction.CallbackContext ctx) => RotateTarget(ctx.ReadValue<Vector2>());
     public void OnJump(InputAction.CallbackContext ctx) => Jump();
     public void OnShoot(InputAction.CallbackContext ctx) => Shoot();
 
     private void Shoot() {
+        if (isBubbled || Time.time - lastBubble <= bubbleCooldown)
+            return;
+
         var bubble = Instantiate(bubbleGameObject, shootPoint);
+        bubble.GetComponent<BubbleController>().parentPlayer = this;
         bubble.transform.parent = null;
-        bubble.transform.rotation = this.transform.GetChild(0).rotation;
+        bubble.transform.rotation = braccio.rotation;
+        lastBubble = Time.time;
     }
     private void Jump()
     {
-        if (isGrounded)
+        if (isBubbled)
+        {
+            currentEscapeBubbleIndex++;
+            if (currentEscapeBubbleIndex >= escapeBubbleIndex)
+            {
+                EscapedBubbled();
+            }
+            return;
+        }
+        if (isGrounded && Time.time - lastJump >= jumpCooldown)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            lastJump = Time.time;
         }
     }
 
@@ -83,12 +153,12 @@ public class PlayerController : MonoBehaviour
     }
     public void RotateTarget(Vector2 lookInput)
     {
-        if (rotationTarget == null || lookInput == Vector2.zero) return;
+        if (isBubbled ||  braccio == null || lookInput == Vector2.zero) return;
 
         // Calculate the angle based on the joystick input
         float angle = Mathf.Atan2(lookInput.y, lookInput.x) * Mathf.Rad2Deg+90;
 
         // Apply the rotation to the target object
-        rotationTarget.rotation = Quaternion.Euler(0, 0, angle);
+        braccio.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
