@@ -21,4 +21,6 @@ public class GameManager : MonoBehaviour
         PlayerController.spawnPoint = spawnPoints[playerNumber].transform.position;
         playerNumber++;
     }
+
+
 }

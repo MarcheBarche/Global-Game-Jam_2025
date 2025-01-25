@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck; // Transform to check if grounded
     [SerializeField] private GameObject bubbleGameObject;
     [SerializeField] private Transform shootPoint;
+
+    [SerializeField] private int lifes = 4;
+
     private float groundCheckRadius = 0.2f; // Radius of ground check
 
     [SerializeField] private float jumpCooldown = .5f;
@@ -37,11 +40,36 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "bubble" && collision.gameObject.GetComponent<BubbleController>().parentPlayer != this)
+
+        Debug.Log($"collision with {collision.gameObject.name}");
+        if (collision.gameObject.layer == LayerMask.NameToLayer("SPIKE"))
+            LoseLife();
+
+        if (collision.gameObject.tag == "bubble" && collision.gameObject.GetComponent<BubbleController>().parentPlayer != this)
         {
+            Destroy(collision.gameObject);
             Bubbled();
             //this.transform.parent = collision.transform;
         }
+    }
+
+    private void Spawn()
+    {
+        this.transform.position = spawnPoint;
+    }
+
+    private void Death()
+    {
+        //Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+    }
+
+    private void LoseLife()
+    {
+        lifes--;
+        if (lifes <= 0)
+            Death();
+        EscapedBubbled();
     }
 
     private void Bubbled()
@@ -49,7 +77,6 @@ public class PlayerController : MonoBehaviour
         isBubbled =true;
         isGrounded = false;
         this.bubble.SetActive(true);
-        this.GetComponent<Animation>().Play();
     }
 
     private void EscapedBubbled()
@@ -58,14 +85,17 @@ public class PlayerController : MonoBehaviour
         currentEscapeBubbleIndex = 0;
         escapeBubbleIndex *= 2;
         this.bubble.SetActive(false);
-        this.GetComponent<Animation>().Stop();
-
-
     }
 
 
     void FixedUpdate()
     {
+        if (isBubbled)
+        {
+            rb.linearVelocity = Vector2.up;
+            return;
+        }
+
         // Apply horizontal movement using Rigidbody2D physics
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
@@ -79,6 +109,8 @@ public class PlayerController : MonoBehaviour
     public void OnShoot(InputAction.CallbackContext ctx) => Shoot();
 
     private void Shoot() {
+        if (isBubbled)
+            return;
         var bubble = Instantiate(bubbleGameObject, shootPoint);
         bubble.GetComponent<BubbleController>().parentPlayer = this;
         bubble.transform.parent = null;
