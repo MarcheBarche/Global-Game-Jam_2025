@@ -8,6 +8,15 @@ public class BubbleController : MonoBehaviour
 
     public PlayerController parentPlayer;
 
+    private float timer = 5f;
+    private float currentTimer = 0f;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("SPIKE"))
+            Destroy(this.gameObject);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,6 +34,9 @@ public class BubbleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentTimer += Time.deltaTime;
+        if (currentTimer > timer)
+            Destroy(this.gameObject);
 
         if (rb.linearVelocity.x < 0.1f)
         {

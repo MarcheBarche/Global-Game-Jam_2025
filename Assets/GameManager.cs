@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,9 +17,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void OnPlayerJoined()
+    void OnPlayerJoined(PlayerInput playerInput)
     {
-        PlayerController.spawnPoint = spawnPoints[playerNumber].transform.position;
+        print(playerInput.gameObject.name);
+        playerInput.gameObject.GetComponent<PlayerController>().spawnPoint = spawnPoints[playerNumber].transform.position;
+        //PlayerController.spawnPoint = spawnPoints[playerNumber].transform.position;
         playerNumber++;
     }
+
 }

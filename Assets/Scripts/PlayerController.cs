@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     public Transform braccio; // The GameObject to rotate
     private InputSystem_Actions inputActions;
-    public static Vector3 spawnPoint = Vector3.zero;
+    public Vector3 spawnPoint = Vector3.zero;
 
     private bool isBubbled = false;
+    [SerializeField] private int firstEscapeBubbleIndex = 10;
+    [SerializeField] private int modifierEscapeBubbleIndex = 10;
     private int escapeBubbleIndex = 10;
     private int currentEscapeBubbleIndex = 0;
 
@@ -23,10 +25,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck; // Transform to check if grounded
     [SerializeField] private GameObject bubbleGameObject;
     [SerializeField] private Transform shootPoint;
+
+    [SerializeField] private int lifes = 4;
+
     private float groundCheckRadius = 0.2f; // Radius of ground check
 
     [SerializeField] private float jumpCooldown = .5f;
     private float lastJump = 0f;
+
+    [SerializeField] private float bubbleCooldown = 2f;
+    private float lastBubble = 0f;
 
     void Awake()
     {
@@ -37,11 +45,37 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "bubble" && collision.gameObject.GetComponent<BubbleController>().parentPlayer != this)
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("SPIKE"))
+            LoseLife();
+
+        if (collision.gameObject.tag == "bubble" && collision.gameObject.GetComponent<BubbleController>().parentPlayer != this)
         {
+            Destroy(collision.gameObject);
             Bubbled();
             //this.transform.parent = collision.transform;
         }
+    }
+
+    private void Spawn()
+    {
+        this.transform.position = spawnPoint;
+        this.escapeBubbleIndex = firstEscapeBubbleIndex;
+    }
+
+    private void Death()
+    {
+        //Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+    }
+
+    private void LoseLife()
+    {
+        lifes--;
+        if (lifes <= 0)
+            Death();
+        EscapedBubbled();
+        Spawn();
     }
 
     private void Bubbled()
@@ -49,23 +83,25 @@ public class PlayerController : MonoBehaviour
         isBubbled =true;
         isGrounded = false;
         this.bubble.SetActive(true);
-        this.GetComponent<Animation>().Play();
     }
 
     private void EscapedBubbled()
     {
         isBubbled = false;
         currentEscapeBubbleIndex = 0;
-        escapeBubbleIndex *= 2;
+        escapeBubbleIndex += modifierEscapeBubbleIndex;
         this.bubble.SetActive(false);
-        this.GetComponent<Animation>().Stop();
-
-
     }
 
 
     void FixedUpdate()
     {
+        if (isBubbled)
+        {
+            rb.linearVelocity = Vector2.up * escapeBubbleIndex/10;
+            return;
+        }
+
         // Apply horizontal movement using Rigidbody2D physics
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
@@ -79,10 +115,14 @@ public class PlayerController : MonoBehaviour
     public void OnShoot(InputAction.CallbackContext ctx) => Shoot();
 
     private void Shoot() {
+        if (isBubbled || Time.time - lastBubble <= bubbleCooldown)
+            return;
+
         var bubble = Instantiate(bubbleGameObject, shootPoint);
         bubble.GetComponent<BubbleController>().parentPlayer = this;
         bubble.transform.parent = null;
         bubble.transform.rotation = braccio.rotation;
+        lastBubble = Time.time;
     }
     private void Jump()
     {
