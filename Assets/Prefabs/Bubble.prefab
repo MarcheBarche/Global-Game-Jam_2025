@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8911574995440368989}
   - component: {fileID: 3769397041522028445}
   - component: {fileID: 4958480505493553517}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472d2ad35cbab0147b6dbe45d82264a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bubbleForce: 0.3
 --- !u!247 &4958480505493553517
 ConstantForce2D:
   m_ObjectHideFlags: 0
@@ -97,7 +98,7 @@ GameObject:
   - component: {fileID: 594690279544290143}
   - component: {fileID: 496160923993993685}
   - component: {fileID: 4919240019923135208}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wiggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

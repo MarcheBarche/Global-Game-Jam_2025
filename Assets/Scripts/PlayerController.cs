@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f; // Speed of the player
     public float jumpForce = 10f; // Force applied for jumping
@@ -12,15 +12,11 @@ public class Movement : MonoBehaviour
     public Transform rotationTarget; // The GameObject to rotate
     private InputSystem_Actions inputActions;
     
-    [SerializeField]
-    private LayerMask groundLayer; // Layer mask to check for ground
-    [SerializeField]
-    private Transform groundCheck; // Transform to check if grounded
+    [SerializeField] private LayerMask groundLayer; // Layer mask to check for ground
+    [SerializeField] private Transform groundCheck; // Transform to check if grounded
+    [SerializeField] private GameObject bubbleGameObject;
+    [SerializeField] private Transform shootPoint;
     private float groundCheckRadius = 0.2f; // Radius of ground check
-
-    [SerializeField] private int playerIndex = 0;
-    private PlayerInput playerInput;
-
 
     void Awake()
     {
@@ -60,8 +56,15 @@ public class Movement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>().x;
     public void OnRotate(InputAction.CallbackContext ctx) => RotateTarget(ctx.ReadValue<Vector2>());
+    public void OnJump(InputAction.CallbackContext ctx) => Jump();
+    public void OnShoot(InputAction.CallbackContext ctx) => Shoot();
 
-    public void Jump()
+    private void Shoot() {
+        var bubble = Instantiate(bubbleGameObject, shootPoint);
+        bubble.transform.parent = null;
+        bubble.transform.rotation = this.transform.GetChild(0).rotation;
+    }
+    private void Jump()
     {
         if (isGrounded)
         {
