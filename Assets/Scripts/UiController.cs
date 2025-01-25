@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UiController : MonoBehaviour
@@ -20,12 +21,12 @@ public class UiController : MonoBehaviour
 
     private void OnStartGameButtonClicked(ClickEvent evt)
     {
-        Debug.Log("STARTGAME!");
+        SceneManager.LoadScene("Battlefield");
     }
 
     private void OnHowToPlayButtonClicked(ClickEvent evt)
     {
-        Debug.Log("HOWTOPLAYCLICKED!");
+        SceneManager.LoadScene("HowToPlay");
     }
 
     private void OnQuitButtonClicked(ClickEvent evt)
