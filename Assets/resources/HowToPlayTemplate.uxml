@@ -1,4 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/resources/custom.uss?fileID=7433441132597879392&amp;guid=9356a65cba276724b8c5f425bd7112dd&amp;type=3#custom" />
     <engine:VisualElement style="flex-grow: 1; height: 10%; width: 100%;">
         <engine:Label text="How to play" name="Title" selectable="false" style="width: 1916px; height: 290px; font-size: 412px; -unity-font-definition: resource(&apos;Fonts/Royal Rumble&apos;); align-items: center; justify-content: center; align-self: flex-start; align-content: center; -unity-text-align: middle-center;" />
     </engine:VisualElement>
@@ -27,6 +28,6 @@
                 <engine:Label text="jump" name="Text" enabled="true" style="height: 100%; align-items: center; align-content: center; position: relative; justify-content: flex-start; -unity-background-scale-mode: stretch-to-fill; overflow: hidden; visibility: visible; display: flex; background-size: 100px 100%; -unity-text-align: middle-left; background-position-y: center 0; align-self: auto; width: auto; padding-left: 50px;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Button text="Main menu" name="BackToMenu" selectable="true" double-click-selects-word="false" triple-click-selects-line="false" parse-escape-sequences="false" style="width: 35%; height: 20%; font-size: 128px; -unity-font-definition: resource(&apos;Fonts/Royal Rumble&apos;); color: rgb(101, 101, 101); -unity-text-outline-color: rgba(255, 255, 255, 0); -unity-text-outline-width: 0; background-color: rgb(125, 125, 125); background-image: resource(&apos;Images/block1&apos;); -unity-background-image-tint-color: rgb(255, 255, 255); -unity-slice-scale: 0; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0; position: absolute; top: 582px; left: 1219px;" />
+        <engine:Button text="Main menu" name="BackToMenu" selectable="true" double-click-selects-word="false" triple-click-selects-line="false" parse-escape-sequences="false" class="button-metal" style="background-position-x: center 0; position: absolute; top: 576px; left: 1224px;" />
     </engine:VisualElement>
 </engine:UXML>
