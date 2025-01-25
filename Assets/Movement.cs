@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,15 +11,20 @@ public class Movement : MonoBehaviour
     private bool isGrounded;
     public Transform rotationTarget; // The GameObject to rotate
     private InputSystem_Actions inputActions;
-
+    
     [SerializeField]
     private LayerMask groundLayer; // Layer mask to check for ground
     [SerializeField]
     private Transform groundCheck; // Transform to check if grounded
     private float groundCheckRadius = 0.2f; // Radius of ground check
 
+    [SerializeField] private int playerIndex = 0;
+    private PlayerInput playerInput;
+
+
     void Awake()
     {
+        /*
         // Initialize the Input Actions
         inputActions = new InputSystem_Actions();
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>().x;
@@ -26,12 +32,12 @@ public class Movement : MonoBehaviour
         inputActions.Player.Jump.performed += ctx => Jump();
         inputActions.Player.Look.performed += ctx => RotateTarget(ctx.ReadValue<Vector2>());
 
-
-        // Get the Rigidbody2D component attached to the player
+        var controllers = InputSystem.devices;
+        // Get the Rigidbody2D component attached to the player*/
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void OnEnable()
+    /*void OnEnable()
     {
         // Enable the input actions
         inputActions.Player.Enable();
@@ -41,7 +47,7 @@ public class Movement : MonoBehaviour
     {
         // Disable the input actions
         inputActions.Player.Disable();
-    }
+    }*/
 
     void FixedUpdate()
     {
@@ -52,7 +58,10 @@ public class Movement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
-    private void Jump()
+    public void OnMove(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>().x;
+    public void OnRotate(InputAction.CallbackContext ctx) => RotateTarget(ctx.ReadValue<Vector2>());
+
+    public void Jump()
     {
         if (isGrounded)
         {
@@ -69,7 +78,7 @@ public class Movement : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
-    private void RotateTarget(Vector2 lookInput)
+    public void RotateTarget(Vector2 lookInput)
     {
         if (rotationTarget == null || lookInput == Vector2.zero) return;
 
