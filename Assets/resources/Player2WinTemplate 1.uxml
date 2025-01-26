@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/resources/custom.uss?fileID=7433441132597879392&amp;guid=9356a65cba276724b8c5f425bd7112dd&amp;type=3#custom" />
+    <engine:VisualElement name="bg" class="bg-main" style="flex-grow: 1;">
+        <engine:VisualElement name="Title" style="flex-grow: 1; width: 100%; height: 2px;">
+            <engine:Label text="Miguel wins!" name="title" class="title-big" />
+        </engine:VisualElement>
+        <engine:VisualElement name="ButtonContainer" class="button-container">
+            <engine:Button text="Play again" name="NewGame" selectable="true" double-click-selects-word="false" triple-click-selects-line="false" parse-escape-sequences="false" class="button-metal" style="background-image: url(&quot;project://database/Assets/resources/Images/block1.png?fileID=2800000&amp;guid=56b3e2d771297e841a82f543de5ec52f&amp;type=3#block1&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(125, 125, 125); margin-bottom: 30px;" />
+            <engine:Button text="Main menu" name="MainMenu" selectable="true" double-click-selects-word="false" triple-click-selects-line="false" class="button-metal" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

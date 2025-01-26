@@ -5,7 +5,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public AnimationStatus _status { get; private set; }
 
-    [SerializeField] Animator animator;
+    [SerializeField] private Animator animator;
     public enum AnimationStatus
     {
         IDLE = 0,
@@ -13,6 +13,7 @@ public class PlayerAnimation : MonoBehaviour
         JUMP = 2,
     }
 
+    public void ChangeController(RuntimeAnimatorController controller) => animator.runtimeAnimatorController = controller;
     public void ChangeStatusAnimation(AnimationStatus status)
     {
         animator.SetFloat("status", (float)(int)status);

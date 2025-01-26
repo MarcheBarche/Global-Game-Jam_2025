@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] public int playerIndex;
+
+
     public float moveSpeed = 5f; // Speed of the player
     public float jumpForce = 12f; // Force applied for jumping
     private float fallMultiplier = 4f;
@@ -41,14 +44,30 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bubbleCooldown = 2f;
     private float lastBubble = 0f;
 
-    private PlayerAnimation playerAnimation;
+    public PlayerAnimation playerAnimation { get; private set; }
+    [SerializeField] private RuntimeAnimatorController player2Controller;
+    [SerializeField] private Sprite player2Braccio;
+
+
+    [SerializeField] private Color[] bubbleColors;
+    public void SetupPlayer()
+    {
+
+        if (playerIndex == 1)
+        {
+            braccio.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = player2Braccio;
+            playerAnimation.ChangeController(player2Controller);
+        }
+        playerAnimation.ChangeStatusAnimation(PlayerAnimation.AnimationStatus.IDLE);
+    }
 
     void Awake()
     {
         this.transform.position = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
-        playerAnimation = GetComponent<PlayerAnimation>();
         lastJump = Time.time;
+        playerAnimation = GetComponent<PlayerAnimation>();
+        SetupPlayer();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -111,8 +130,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // Apply horizontal movement using Rigidbody2D physics
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y); 
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
         // Check if the player is grounded
+        if (rb.linearVelocity.x < 0)
+            this.transform.localScale = new Vector3(-.5f,.5f,.5f);
+        if (rb.linearVelocity.x > 0)
+            this.transform.localScale = new Vector3(.5f, .5f, .5f);
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         Debug.Log($"rb.linearVelocity.x {rb.linearVelocity.x}");
@@ -156,6 +179,7 @@ public class PlayerController : MonoBehaviour
         bubble.GetComponent<BubbleController>().parentPlayer = this;
         bubble.transform.parent = null;
         bubble.transform.rotation = braccio.rotation;
+        bubble.transform.GetChild(0).GetComponent<SpriteRenderer>().color = bubbleColors[playerIndex];
         lastBubble = Time.time;
     }
     private void Jump()
