@@ -33,12 +33,13 @@ public class UiMainMenuController : MonoBehaviour
 
     private void OnStartGameButtonClicked()
     {
+        MusicManager.Instance.Swap();
         SceneManager.LoadScene("Arena");
     }
 
     private void OnHowToPlayButtonClicked()
     {
-        SceneManager.LoadScene("HowToPlay");
+        SceneManager.LoadScene("HowToPlay",LoadSceneMode.Additive);
     }
 
     private void OnQuitButtonClicked()
@@ -49,5 +50,6 @@ public class UiMainMenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 }
