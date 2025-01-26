@@ -6796,6 +6796,10 @@ PrefabInstance:
       propertyPath: m_JoinBehavior
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1907294209039469925, guid: 5ec0fc3db35e9ce4ebb69a5478d1dd12, type: 3}
+      propertyPath: m_MaxPlayerCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2253103240011444059, guid: 5ec0fc3db35e9ce4ebb69a5478d1dd12, type: 3}
       propertyPath: UIs.Array.size
       value: 2

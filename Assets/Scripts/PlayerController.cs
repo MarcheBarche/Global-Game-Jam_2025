@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
         p1_SHOOT = 1,
         p2_JUMP = 2,
         p2_SHOOT = 3,
-
+        DEATH = 4,
     }
 
     [SerializeField] public int playerIndex;
@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
 
     private void LoseLife()
     {
+        pam.play(SFX[(int)SOUNDS.DEATH]);
         lifes--;
         UI.transform.GetChild(lifes).gameObject.SetActive(false);
         if (lifes <= 0)
