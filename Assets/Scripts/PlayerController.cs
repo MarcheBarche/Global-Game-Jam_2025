@@ -9,7 +9,11 @@ public class PlayerController : MonoBehaviour
 
 
     public float moveSpeed = 5f; // Speed of the player
-    public float jumpForce = 5f; // Force applied for jumping
+    public float jumpForce = 12f; // Force applied for jumping
+    private float fallMultiplier = 4f;
+    private float coyoteTime = 0.2f; // Adjust as needed
+    private float coyoteTimeCounter;
+
     private Rigidbody2D rb;
     private float moveInput;
     private bool isGrounded = false;
@@ -151,6 +155,15 @@ public class PlayerController : MonoBehaviour
                 playerAnimation.ChangeStatusAnimation(PlayerAnimation.AnimationStatus.JUMP);
             }
         }
+
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext ctx) => moveInput = !this.isBubbled ? ctx.ReadValue<Vector2>().x : 0;
@@ -180,12 +193,21 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
-        if (isGrounded && Time.time - lastJump >= jumpCooldown)
+
+        if ((isGrounded || coyoteTimeCounter > 0) && Time.time - lastJump >= jumpCooldown)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // Set vertical velocity directly
             lastJump = Time.time;
+            coyoteTimeCounter = 0; // Reset coyote time after jump
+        }
+
+        // Apply extra gravity if the player releases the jump button mid-air for variable jump height
+        if (rb.linearVelocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
     }
+
 
     private void OnDrawGizmos()
     {
