@@ -17,7 +17,7 @@ public class UiHowToPlayController : MonoBehaviour
 
     private void OnBackToMenuButtonClicked()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.UnloadSceneAsync("HowToPlay");
     }
 
     // Update is called once per frame
