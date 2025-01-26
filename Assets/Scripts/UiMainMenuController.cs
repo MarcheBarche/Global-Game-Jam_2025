@@ -21,7 +21,7 @@ public class UiMainMenuController : UiControllerBase
 
         _startGameButton.clicked += OnStartGameButtonClicked;
         _howToPlayButton.clicked += OnHowToPlayButtonClicked;
-        _howToPlayButton.clicked += OnQuitButtonClicked;
+        _quitButton.clicked += OnQuitButtonClicked;
 
     }
 
