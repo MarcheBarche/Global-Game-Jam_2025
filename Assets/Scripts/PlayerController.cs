@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f; // Speed of the player
     public float jumpForce = 12f; // Force applied for jumping
     private float fallMultiplier = 4f;
-    private float coyoteTime = 0.2f; // Adjust as needed
+    private float coyoteTime = 0.05f; // Adjust as needed
     private float coyoteTimeCounter;
 
     private Rigidbody2D rb;
