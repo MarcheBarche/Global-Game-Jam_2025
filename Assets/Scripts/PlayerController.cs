@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public int playerIndex;
 
-    public static bool isBegin = false;
+    [SerializeField] public static bool isBegin = false;
 
     public float moveSpeed = 5f; // Speed of the player
     public float jumpForce = 12f; // Force applied for jumping

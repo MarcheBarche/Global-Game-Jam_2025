@@ -20,6 +20,10 @@ public class Transition : MonoBehaviour
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + speed * Time.deltaTime, this.transform.position.z);
 
         if(this.transform.position.y >= 5)
+        {
+            PlayerController.isBegin = false;
+            isRunning = false;
             SceneManager.LoadScene(nextScene);
+        }
     }
 }
