@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3866734508255086230}
   - component: {fileID: 350968660402235415}
+  - component: {fileID: 8488721475246809783}
   m_Layer: 0
   m_Name: Player1-sprite_0
   m_TagString: Untagged
@@ -87,6 +88,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8488721475246809783
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643208838652022258}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f4cb3a59ba5bb847a982445b7a3721e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &736044315696985009
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,6 +122,7 @@ GameObject:
   - component: {fileID: 1433474383382498669}
   - component: {fileID: 6618324916439738690}
   - component: {fileID: 6649504046064145230}
+  - component: {fileID: 4313289169190866614}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Untagged
@@ -116,7 +140,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.6971, y: 2.6971, z: 2.6971}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8327439979511590162}
@@ -164,9 +188,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.6556604, g: 1, b: 0.95128196, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: -8493556518267342893, guid: 54ef6960448a79f4f9c3d748eeb3f15f, type: 3}
+  m_Color: {r: 0.6556604, g: 1, b: 0.95128196, a: 0.5568628}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -207,11 +231,11 @@ CircleCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 2.5047698
 --- !u!111 &6649504046064145230
 Animation:
   m_ObjectHideFlags: 0
@@ -229,6 +253,25 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!251 &4313289169190866614
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736044315696985009}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &3359566878199689081
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +380,7 @@ GameObject:
   - component: {fileID: 219192234539533155}
   - component: {fileID: 4140230174422418199}
   - component: {fileID: 3765087015562952833}
+  - component: {fileID: 3898598805312567014}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -450,6 +494,8 @@ MonoBehaviour:
   jumpForce: 7
   braccio: {fileID: 1153203865046011527}
   spawnPoint: {x: 0, y: 0, z: 0}
+  firstEscapeBubbleIndex: 10
+  modifierEscapeBubbleIndex: 10
   bubble: {fileID: 736044315696985009}
   groundLayer:
     serializedVersion: 2
@@ -609,11 +655,32 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0496ce3d-419c-4418-9675-4d6030a240c2
+    m_ActionName: UI/Down
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 44a7aee7-359b-4d25-80fa-03af6c86a983
+    m_ActionName: UI/Up
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3898598805312567014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792152577802020719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d8f929d165a40478b60ba8ced45d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8488721475246809783}
 --- !u!1 &8111949867671691304
 GameObject:
   m_ObjectHideFlags: 0

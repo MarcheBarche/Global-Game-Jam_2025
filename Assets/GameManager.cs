@@ -19,10 +19,16 @@ public class GameManager : MonoBehaviour
 
     void OnPlayerJoined(PlayerInput playerInput)
     {
-        print(playerInput.gameObject.name);
-        playerInput.gameObject.GetComponent<PlayerController>().spawnPoint = spawnPoints[playerNumber].transform.position;
-        //PlayerController.spawnPoint = spawnPoints[playerNumber].transform.position;
-        playerNumber++;
+        if (playerNumber < GetComponent<PlayerInputManager>().maxPlayerCount)
+        {
+            print(playerInput.gameObject.name);
+            playerInput.gameObject.GetComponent<PlayerController>().spawnPoint = spawnPoints[playerNumber].transform.position;
+            //PlayerController.spawnPoint = spawnPoints[playerNumber].transform.position;
+            playerNumber++;
+            if (playerNumber >= spawnPoints.Length) {
+                GetComponent<PlayerInputManager>().enabled = false;
+            }
+        }
     }
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,10 +37,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bubbleCooldown = 2f;
     private float lastBubble = 0f;
 
+    private PlayerAnimation playerAnimation;
+
     void Awake()
     {
         this.transform.position = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
+        playerAnimation = GetComponent<PlayerAnimation>();
         lastJump = Time.time;
     }
 
@@ -103,10 +107,27 @@ public class PlayerController : MonoBehaviour
         }
 
         // Apply horizontal movement using Rigidbody2D physics
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
-
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y); 
         // Check if the player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        Debug.Log($"rb.linearVelocity.x {rb.linearVelocity.x}");
+        if (isGrounded) {
+            if(playerAnimation._status != PlayerAnimation.AnimationStatus.WALK && (rb.linearVelocity.x >= 1f || rb.linearVelocity.x <= -1f))
+            {
+                playerAnimation.ChangeStatusAnimation(PlayerAnimation.AnimationStatus.WALK);
+            }else if(playerAnimation._status != PlayerAnimation.AnimationStatus.IDLE && (rb.linearVelocity.x < 1f && rb.linearVelocity.x > -1f))
+            {
+                playerAnimation.ChangeStatusAnimation(PlayerAnimation.AnimationStatus.IDLE);
+            }
+        }
+        else
+        {
+            if (playerAnimation._status != PlayerAnimation.AnimationStatus.JUMP)
+            {
+                playerAnimation.ChangeStatusAnimation(PlayerAnimation.AnimationStatus.JUMP);
+            }
+        }
     }
 
     public void OnMove(InputAction.CallbackContext ctx) => moveInput = !this.isBubbled ? ctx.ReadValue<Vector2>().x : 0;
