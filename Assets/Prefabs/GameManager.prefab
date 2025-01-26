@@ -89,3 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051d7b542b0325c46966cc4a36581694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoints: []
+  player2BraccioSprite: {fileID: -4044651244448005127, guid: 68de4ad143f8fc441b192e5ad548fde6, type: 3}
+  player2Controller: {fileID: 9100000, guid: 81da397e3935d0049b11cb472467b633, type: 2}
