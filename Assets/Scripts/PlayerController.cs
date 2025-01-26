@@ -5,6 +5,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private enum SOUNDS
+    {
+        p1_JUMP = 0,
+        p1_SHOOT = 1,
+        p2_JUMP = 2,
+        p2_SHOOT = 3,
+
+    }
+
     [SerializeField] public int playerIndex;
 
     public static bool isBegin = false;
@@ -49,10 +58,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController player2Controller;
     [SerializeField] private Sprite player2Braccio;
 
+    [SerializeField] private PlayerAudioManager pam;
 
     [SerializeField] private Color[] bubbleColors;
 
     public GameObject UI;
+
+    [SerializeField] private AudioClip[] SFX;
 
     public void SetupPlayer()
     {
@@ -196,6 +208,10 @@ public class PlayerController : MonoBehaviour
         bubble.transform.rotation = braccio.rotation;
         bubble.transform.GetChild(0).GetComponent<SpriteRenderer>().color = bubbleColors[playerIndex];
         lastBubble = Time.time;
+        if (this.playerIndex == 0)
+            pam.play(SFX[(int)SOUNDS.p1_SHOOT]);
+        else
+            pam.play(SFX[(int)SOUNDS.p2_SHOOT]);
     }
     private void Jump()
     {
@@ -220,7 +236,12 @@ public class PlayerController : MonoBehaviour
         if (rb.linearVelocity.y > 0 && !Input.GetButton("Jump"))
         {
             rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            if (this.playerIndex == 0)
+                pam.play(SFX[(int)SOUNDS.p1_JUMP]);
+            else
+                pam.play(SFX[(int)SOUNDS.p2_JUMP]);
         }
+
     }
 
 

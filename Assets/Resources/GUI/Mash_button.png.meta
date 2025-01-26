@@ -1,13 +1,40 @@
 fileFormatVersion: 2
-guid: 0e206fb4baeaaf6408b65d5681202649
+guid: a8b885e552038024396646bc9c4079ed
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4421631276874953968
-    second: Main_menu_overlay_0
+      213: -3877124407026142268
+    second: Mash_button_0
   - first:
-      213: -5106782764591688890
-    second: Main_menu_overlay_1
+      213: 3706267053761449461
+    second: Mash_button_1
+  - first:
+      213: -7291059831919080708
+    second: Mash_button_2
+  - first:
+      213: -5027697290195292206
+    second: Mash_button_3
+  - first:
+      213: 987645180721556822
+    second: Mash_button_4
+  - first:
+      213: 6169494584381571247
+    second: Mash_button_5
+  - first:
+      213: 7198073827190795635
+    second: Mash_button_6
+  - first:
+      213: -328264440411631450
+    second: Mash_button_7
+  - first:
+      213: -1194594937657612500
+    second: Mash_button_8
+  - first:
+      213: -571347185665195591
+    second: Mash_button_9
+  - first:
+      213: 4157704459455817528
+    second: Mash_button_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,62 +126,49 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Main_menu_overlay_0
+      name: Mash_button_0
       rect:
         serializedVersion: 2
-        x: 18
+        x: 0
         y: 0
-        width: 765
-        height: 940
+        width: 694
+        height: 529
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 01b8c1ec7c533a2c0800000000000000
-      internalID: -4421631276874953968
+      spriteID: 11da272cd9ec7934fb18863d6343a089
+      internalID: 1133096901
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Main_menu_overlay_1
+      name: Mash_button_1
       rect:
         serializedVersion: 2
-        x: 1185
+        x: 694
         y: 0
-        width: 735
-        height: 984
+        width: 694
+        height: 529
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 643dc6be1201129b0800000000000000
-      internalID: -5106782764591688890
+      spriteID: 8d97691afbb23124b8fd6a9b83148580
+      internalID: -259947160
       vertices: []
       indices: 
       edges: []
@@ -163,7 +177,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e49d3547d8a9ca54fa98c90e204159df
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +187,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Main_menu_overlay_0: -4421631276874953968
-      Main_menu_overlay_1: -5106782764591688890
+      Mash_button_0: 1133096901
+      Mash_button_1: -259947160
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
