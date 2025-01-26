@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,45 +6,30 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class UiPauseMenuController : MonoBehaviour
+public class UiPauseMenuController : UiControllerBase
 {
-
-    private int index = 0;
-    private List<VisualElement> buttons = new List<VisualElement>();
-
-    private Color unselectedButtonColor = new Color(255 / 255, 255 / 255, 255 / 255);
-    private Color unselectedTextColor = new Color(101 / 255, 101 / 255, 101 / 255);
-    private Color selectedButtonColor = new Color(101 / 255, 101 / 255, 101 / 255);
-    private Color selectedTextColor = new Color(255 / 255, 255 / 255, 255 / 255);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        base.Start();
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         var _continueGameButton = root.Q<Button>("Continue");
-        var _howToPlayButton = root.Q<Button>("HowToPlay");
-        var _quitButton = root.Q<Button>("Quit");
-
-
+        var _mainMenuButton = root.Q<Button>("MainMenu");
 
         _continueGameButton.clicked += OnContinueGameButtonClicked;
-        _howToPlayButton.clicked += OnHowToPlayButtonClicked;
-        _howToPlayButton.clicked += OnQuitButtonClicked;
+        _mainMenuButton.clicked += OnMainMenuButtonClicked;
     }
 
     private void OnContinueGameButtonClicked()
     {
+        _buttonSfx.Play();
         SceneManager.UnloadSceneAsync("PauseMenu");
     }
 
-    private void OnHowToPlayButtonClicked()
+    private void OnMainMenuButtonClicked()
     {
-        SceneManager.LoadScene("HowToPlay",LoadSceneMode.Additive);
-    }
-
-    private void OnQuitButtonClicked()
-    {
-        Application.Quit();
+        base.StartCoroutine(LoadScene("MainMenu"));
     }
 
     // Update is called once per frame

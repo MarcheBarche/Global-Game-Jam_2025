@@ -66,7 +66,9 @@
     align-content: center;
     -unity-text-align: middle-center;
     color: rgb(255, 255, 255);
-    -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    margin-bottom: 0;
 }
 
 .button-container {
@@ -96,5 +98,6 @@
     width: auto;
     padding-left: 50px;
     color: rgb(255, 255, 255);
-    -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
 }
