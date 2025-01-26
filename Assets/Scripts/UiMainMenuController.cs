@@ -39,7 +39,7 @@ public class UiMainMenuController : MonoBehaviour
 
     private void OnHowToPlayButtonClicked()
     {
-        SceneManager.LoadScene("HowToPlay",LoadSceneMode.Additive);
+        SceneManager.LoadScene("HowToPlay");
     }
 
     private void OnQuitButtonClicked()
