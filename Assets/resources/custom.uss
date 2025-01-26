@@ -1,7 +1,7 @@
 .button-metal {
-    width: 35%;
+    width: 25%;
     height: 20%;
-    font-size: 128px;
+    font-size: 100px;
     -unity-font-definition: resource('Fonts/Royal Rumble');
     color: rgb(101, 101, 101);
     -unity-text-outline-color: rgba(255, 255, 255, 0);
@@ -25,7 +25,7 @@
 }
 
 .button-metal:active {
-    width: 34%;
+    width: 24%;
     height: 19%;
     background-color: rgba(255, 255, 255, 0.8);
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.8);
@@ -58,7 +58,7 @@
 .title-big {
     width: 1916px;
     height: 290px;
-    font-size: 412px;
+    font-size: 350px;
     -unity-font-definition: url("project://database/Assets/resources/Fonts/Royal%20Rumble.ttf?fileID=12800000&guid=fc52461a121859d49aaf251c58fad1af&type=3#Royal Rumble");
     align-items: center;
     justify-content: center;
