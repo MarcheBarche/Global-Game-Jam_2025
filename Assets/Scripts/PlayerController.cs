@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] public int playerIndex;
 
+    public static bool isBegin = false;
 
     public float moveSpeed = 5f; // Speed of the player
     public float jumpForce = 12f; // Force applied for jumping
@@ -50,6 +51,9 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private Color[] bubbleColors;
+
+    public GameObject UI;
+
     public void SetupPlayer()
     {
 
@@ -59,6 +63,7 @@ public class PlayerController : MonoBehaviour
             playerAnimation.ChangeController(player2Controller);
         }
         playerAnimation.ChangeStatusAnimation(PlayerAnimation.AnimationStatus.IDLE);
+        UI.SetActive(true);
     }
 
     void Awake()
@@ -94,11 +99,13 @@ public class PlayerController : MonoBehaviour
     {
         //Destroy(this.gameObject);
         this.gameObject.SetActive(false);
+        GameManager.LoseGame(this.playerIndex);
     }
 
     private void LoseLife()
     {
         lifes--;
+        UI.transform.GetChild(lifes).gameObject.SetActive(false);
         if (lifes <= 0)
             Death();
         EscapedBubbled();
@@ -123,6 +130,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!isBegin)
+        {
+            GetComponent<PlayerInput>().DeactivateInput();
+            return;
+        }
+        else
+            GetComponent<PlayerInput>().ActivateInput();
+
         if (isBubbled)
         {
             rb.linearVelocity = Vector2.up * escapeBubbleIndex/10;
@@ -138,7 +153,7 @@ public class PlayerController : MonoBehaviour
             this.transform.localScale = new Vector3(.5f, .5f, .5f);
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-        Debug.Log($"rb.linearVelocity.x {rb.linearVelocity.x}");
+        //Debug.Log($"rb.linearVelocity.x {rb.linearVelocity.x}");
         if (isGrounded) {
             if(playerAnimation._status != PlayerAnimation.AnimationStatus.WALK && (rb.linearVelocity.x >= 1f || rb.linearVelocity.x <= -1f))
             {
